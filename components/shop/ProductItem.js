@@ -10,7 +10,7 @@ import {
  } from 'react-native';
 
 import * as Fonts from '../../Fonts'
-import Price from './Price';
+import Price from '../Price';
 
 import Colors from '../../constans/Colors';
 import Platform from '../../constans/Platform';
@@ -37,7 +37,7 @@ const ProductItem = props => {
 
                     <View  style={styles.actions}>
                         <Button color={Colors.primary} title="View Details" onPress={props.onViewDetail} />
-                        <Button title="Add to Cart" onPress={props.onAddToCard} />
+                        <Button title="Add to Cart" onPress={props.onAddToCart} />
                     </View>
                 </View>
             </TouchableCmp>

@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import * as Fonts from '../../../Fonts';
 import  Colors from '../../../constans/Colors';
-import Price from '../../shop/Price';
+import Price from '../../Price';
 
 import * as cartActions from '../../../store/actions/cart';
 
