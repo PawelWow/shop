@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 
+import * as Fonts from '../../../Fonts';
+
 import  Colors from '../../../constans/Colors';
 
 import Price from '../../shop/Price';
@@ -45,9 +47,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#888',
         textAlign: 'center',
-        marginVertical: 20
+        marginVertical: 20,
+        fontFamily: Fonts.FONT_OPEN_SANS_BOLD
     },
     description: {
+        fontFamily: Fonts.FONT_OPEN_SANS_REGULAR,
         fontSize: 14,
         textAlign: 'center',
         marginHorizontal: 20

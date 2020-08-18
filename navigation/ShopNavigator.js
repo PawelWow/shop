@@ -1,6 +1,8 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 
+import * as Fonts from '../Fonts';
+
 import ProductsOVerviewScreen from '../components/screens/shop/ProductsOverviewScreen';
 import ProductDetailScreen from '../components/screens/shop/ProductDetailScreen';
 
@@ -14,6 +16,12 @@ const ProductsNavigator = createStackNavigator({
     defaultNavigationOptions: {
         headerStyle: {
             backgroundColor: Platform.isAndroid ? Colors.primary : ''
+        },
+        headerTitleStyle: {
+            fontFamily: Fonts.FONT_OPEN_SANS_BOLD
+        },
+        headerBackTitleStyle: {
+            fontFamily: Fonts.FONT_OPEN_SANS_REGULAR
         },
         headerTintColor: Platform.isAndroid ? 'white' : Colors.primary
     }

@@ -9,10 +9,12 @@ import {
     TouchableNativeFeedback
  } from 'react-native';
 
+import * as Fonts from '../../Fonts.js'
 import Price from './Price';
 
 import Colors from '../../constans/Colors';
 import Platform from '../../constans/Platform';
+import { FONT_OPEN_SANS_REGULAR } from '../../fonts.js';
 
 
 const ProductItem = props => {
@@ -75,10 +77,12 @@ const styles = StyleSheet.create({
         height: '100%'
     },
     title: {
+        fontFamily: Fonts.FONT_OPEN_SANS_BOLD,
         fontSize: 18,
-        marginVertical: 4,
+        marginVertical: 2,
     },
     price: {
+        fontFamily: Fonts.FONT_OPEN_SANS_REGULAR,
         fontSize: 14,
         color: '#888',
     },
