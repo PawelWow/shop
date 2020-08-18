@@ -9,13 +9,11 @@ import {
     TouchableNativeFeedback
  } from 'react-native';
 
-import * as Fonts from '../../Fonts.js'
+import * as Fonts from '../../Fonts'
 import Price from './Price';
 
 import Colors from '../../constans/Colors';
 import Platform from '../../constans/Platform';
-import { FONT_OPEN_SANS_REGULAR } from '../../fonts.js';
-
 
 const ProductItem = props => {
     let TouchableCmp = TouchableOpacity;
