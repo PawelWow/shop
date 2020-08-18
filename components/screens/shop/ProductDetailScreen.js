@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
+import CartHeaderButton from '../../UI/CartHeaderButton';
+
 import * as Fonts from '../../../Fonts';
 import  Colors from '../../../constans/Colors';
 import Price from '../../Price';
@@ -37,7 +39,8 @@ const ProductDetailScreen = props => {
 ProductDetailScreen.navigationOptions = navData => {
     const productTitle = navData.navigation.getParam('productTitle');
     return{
-        headerTitle: productTitle
+        headerTitle: productTitle,
+        headerRight: () => <CartHeaderButton onPress={() => { navData.navigation.navigate('Cart') }} />     
     };
 };
 
