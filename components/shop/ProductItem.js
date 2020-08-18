@@ -1,5 +1,15 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Button, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    StyleSheet,
+    Button,
+    TouchableOpacity,
+    TouchableNativeFeedback
+ } from 'react-native';
+
+import Price from './Price';
 
 import Colors from '../../constans/Colors';
 import Platform from '../../constans/Platform';
@@ -22,7 +32,7 @@ const ProductItem = props => {
 
                     <View style={styles.details}>
                         <Text style={styles.title}>{props.title}</Text>
-                        <Text style={styles.price}>${props.price.toFixed(2)}</Text>
+                        <Price style={styles.price} value={props.price} />
                     </View>
 
                     <View  style={styles.actions}>
