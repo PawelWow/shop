@@ -6,6 +6,9 @@ import * as Fonts from '../../Fonts';
 const INPUT_CHANGE = 'INPUT_CHANGE';
 const INPUT_BLUR  = 'INPUT_BLUR';
 
+            // TODO PD chyba nie do końca coś tutaj działa - jeśli nie stracimy focusa to nadal dostajemy komunikat, że 
+            // formularz nie walidny. Jak wypełnimy wszystkie pola to musimy zmienic focus
+
 const inputReducer = (state, action) => {
     switch(action.type) {
         case INPUT_CHANGE:
@@ -15,6 +18,7 @@ const inputReducer = (state, action) => {
                 isValid: action.isValid
             }
         case INPUT_BLUR:
+
             return {
                 ...state,
                 touched: true
