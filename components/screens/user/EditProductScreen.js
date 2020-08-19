@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback } from 'react';
-import {View, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
+import {View, ScrollView, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as Fonts from '../../../Fonts';
@@ -12,6 +12,7 @@ const EditProductScreen = props => {
     const editedProduct = useSelector(state => state.products.userProducts.find(prod => prod.id === prodId));
 
     const [title, setTitle] = useState(editedProduct ? editedProduct.title : '');
+    const [titleIsValid, setTitleIsValid] = useState(false);
     const [imageUrl, setImageUrl] = useState(editedProduct ? editedProduct.imageUrl : '');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState(editedProduct ? editedProduct.description : '');
@@ -19,24 +20,51 @@ const EditProductScreen = props => {
     const dispatch = useDispatch();
 
     const onSubmit = useCallback(() => {
+        if(!titleIsValid) {
+            Alert.alert('Wrong input!', 'Check the errors in the form.', [
+                { text: 'OK' }
+            ]);
+            return;
+        }
         if(editedProduct) {
             dispatch(productsActions.updateProduct(prodId, title, description, imageUrl));
         } else {
             dispatch(productsActions.createProduct(title, description, imageUrl, +price));
         }
         props.navigation.goBack();
-    }, [dispatch, prodId, title, description, imageUrl, price]);
+    }, [dispatch, prodId, title, description, imageUrl, price, titleIsValid]);
 
     useEffect(() => {
         props.navigation.setParams({ submit: onSubmit });
     }, [onSubmit]);
+
+    const onTitleChange = text => {
+        if(text.trim().length === 0) {
+            setTitleIsValid(false);
+        }
+        else {
+            setTitleIsValid(true);
+        }
+        setTitle(text);
+    };
 
     return(
         <ScrollView>
             <View style={styles.form}>
                 <View style={styles.formCotnrol}>
                     <Text style={styles.label}>Title</Text>
-                    <TextInput style={styles.input} value={title} onChangeText={text => setTitle(text)} />
+                    <TextInput
+                        style={styles.input}
+                        value={title}
+                        onChangeText={text => onTitleChange(text)}
+                        keyboardType='default'
+                        autoCapitalize="sentences"
+                        autoCorrect
+                        returnKeyType="next"
+                        onEndEditing={() => console.log('onEditing')}
+                        onSubmitEditing={() => console.log('onSubmitEditing')}                       
+                    />
+                    {!titleIsValid && <Text>Please enter a text</Text>}
                 </View>
                 <View style={styles.formCotnrol}>
                     <Text style={styles.label}>Image URL</Text>
@@ -46,7 +74,12 @@ const EditProductScreen = props => {
                     editedProduct ? null : (
                         <View style={styles.formCotnrol}>
                             <Text style={styles.label}>Price</Text>
-                            <TextInput style={styles.input} value={price} onChangeText={text => setPrice(text)} />
+                            <TextInput
+                                style={styles.input}
+                                value={price}
+                                onChangeText={text => setPrice(text)}
+                                keyboardType='decimal-pad'
+                            />
                         </View>
                     )
                 }
