@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import ProductItem from '../../shop/ProductItem';
 import CartHeaderButton from '../../UI/CartHeaderButton';
+import MenuHeaderButton from '../../UI/MenuHeaderButton';
 
 import * as cartActions from '../../../store/actions/cart';
 
@@ -38,7 +39,8 @@ const ProductsOverviewScreen = props => {
 ProductsOverviewScreen.navigationOptions = navData => {
     return {
         headerTitle: 'All products',
-        headerRight: () => <CartHeaderButton onPress={() => { navData.navigation.navigate('Cart') }} />
+        headerRight: () => <CartHeaderButton onPress={() => { navData.navigation.navigate('Cart') }} />,
+        headerLeft: () => <MenuHeaderButton onPress={() => { navData.navigation.toggleDrawer() }} />
     }
 
 };
