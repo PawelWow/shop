@@ -9,7 +9,7 @@ const MenuHeaderButton = props => {
     return(
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
-            title='Cart'
+            title='Menu'
             iconName={Platform.isAndroid ? 'md-menu' : 'ios-menu'}
             onPress={props.onPress}
         />

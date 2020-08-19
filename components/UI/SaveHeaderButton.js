@@ -5,16 +5,16 @@ import HeaderButton from './HeaderButton';
 import Platform from '../../constans/Platform';
 
 
-const AddProductHeaderButton = props => {
+const SaveHeaderButton = props => {
     return(
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
-            title='Add product'
-            iconName={Platform.isAndroid ? 'md-create' : 'ios-create'}
+            title='Save'
+            iconName={Platform.isAndroid ? 'md-checkmark' : 'ios-checkmark'}
             onPress={props.onPress}
         />
     </HeaderButtons>
     );
 };
 
-export default AddProductHeaderButton;
+export default SaveHeaderButton;
