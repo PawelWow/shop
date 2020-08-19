@@ -16,13 +16,15 @@ const CartItem = props => {
             </View>
             <View style={styles.itemData}>
                 <Price style={styles.mainText} value={props.amount} />
-                <TouchableOpacity onPress={props.onRemove} style={styles.deleteButton}>
-                    <Ionicons
-                        name={Platform.isAndroid ? 'md-trash' : 'ios-trash'}
-                        size={23}
-                        color="red"
-                    />
-                </TouchableOpacity>
+                {props.deletable && (
+                    <TouchableOpacity onPress={props.onRemove} style={styles.deleteButton}>
+                        <Ionicons
+                            name={Platform.isAndroid ? 'md-trash' : 'ios-trash'}
+                            size={23}
+                            color="red"
+                        />
+                    </TouchableOpacity>
+                )}
             </View>
         </View>
     );
