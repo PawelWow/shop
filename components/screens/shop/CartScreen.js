@@ -6,6 +6,7 @@ import Price from '../../Price';
 import CartItem from '../../shop/CartItem';
 
 import * as cartActions from '../../../store/actions/cart';
+import * as ordersActions from '../../../store/actions/orders';
 
 import * as Fonts from '../../../Fonts';
 import Colors from '../../../constans/Colors';
@@ -34,7 +35,15 @@ const CartScreen = props => {
         <View style={styles.screen}>
             <View style={styles.summary} >
                 <Text style={styles.summaryText}>Total: <Price style={styles.amount} value={cartTotalAmount} /></Text>
-                <Button color={Colors.accent} title="Order Now" disabled={cartItems.length === 0} />
+                <Button
+                    color={Colors.accent}
+                    title="Order Now"
+                    disabled={cartItems.length === 0}
+                    onPress={() => {
+                        dispatch(ordersActions.addOrder(cartItems, cartTotalAmount));
+                    }}
+                />
+
             </View>
             <View>
                 <FlatList
