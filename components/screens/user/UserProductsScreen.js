@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import ProductItem from '../../shop/ProductItem';
 import MenuHeaderButton from '../../UI/MenuHeaderButton';
+import AddProductHeaderButton from '../../UI/AddProductHeaderButton';
 
 import * as productsActions from '../../../store/actions/products';
 import Colors from '../../../constans/Colors';
@@ -12,6 +13,10 @@ const UserProductsScreen = props => {
     const userProducts = useSelector(state => state.products.userProducts);
     
     const dispatch = useDispatch();
+
+    const onEditProduct = (id) => {
+        props.navigation.navigate('EditProduct', {productId: id});
+    }
 
     return(
         <FlatList
@@ -22,9 +27,9 @@ const UserProductsScreen = props => {
                     image={itemData.item.imageUrl}
                     title={itemData.item.title}
                     price={itemData.item.price}
-                    onSelect={() => {}}
+                    onSelect={() => { onEditProduct(itemData.item.id) }}
                 >
-                    <Button color={Colors.primary} title="Edit" onPress={() => {}} />
+                    <Button color={Colors.primary} title="Edit" onPress={() => { onEditProduct(itemData.item.id) }} />
                     <Button
                         color={Colors.primary}
                         title="Delete"
@@ -41,7 +46,8 @@ const UserProductsScreen = props => {
 UserProductsScreen.navigationOptions =  navData => {
     return {
         headerTitle: 'User products',
-        headerLeft: () => <MenuHeaderButton onPress={() => { navData.navigation.toggleDrawer() }} />
+        headerRight: () => <AddProductHeaderButton onPress={() => navData.navigation.navigate('EditProduct')} />,
+        headerLeft: () => <MenuHeaderButton onPress={() => { navData.navigation.toggleDrawer() }} />        
     }
 };
 
