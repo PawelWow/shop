@@ -34,7 +34,30 @@ export default (state = initialState, action) => {
             }
         
         case REMOVE_FROM_CART:
-            const currentQty = state.items.[action.pid]
+            const currentItem = state.items[action.pid];
+            if( currentItem.quantity > 1 ){
+                const cartItem = new CartItem(
+                    currentItem.quantity - 1,
+                    currentItem.productPrice,
+                    currentItem.productTitle,
+                    currentItem.sum - currentItem.productPrice
+                );
+                return {
+                    ...state,
+                    items: {...state.items, [action.pid]: cartItem},
+                    totalAmount: state.totalAmount - currentItem.productPrice
+                }
+            } else {
+                const updatedItems = {...state.items};
+                delete updatedItems[action.pid];
+                return {
+                    ...state,
+                    items: updatedItems,
+                    // Odejmuję resztę, jaka zostałą przy tym produkcie. Teoretycznie productPrice powinno starczyć, bo tylko to dodajemy
+                    totalAmount: state.totalAmount - currentItem.sum
+                }
+            }
+
     }
 
     return state;
