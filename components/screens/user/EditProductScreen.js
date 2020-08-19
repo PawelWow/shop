@@ -3,13 +3,16 @@ import {
     View,
     ScrollView,
     StyleSheet,
-    Alert
+    Alert,
+    KeyboardAvoidingView
 }  from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as productsActions from '../../../store/actions/products';
 import SaveHeaderButton from '../../UI/SaveHeaderButton';
 import Input from '../../UI/Input';
+
+import Platform from '../../../constans/Platform';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
@@ -94,8 +97,6 @@ const EditProductScreen = props => {
     }, [onSubmit]);
 
     const onInputChange = useCallback((inputIdentifier, inputValue, inputValidity) => {
-        console.log('---input ' + inputIdentifier);
-        console.log(inputValidity);
         dispatchFormState({
             type: FORM_INPUT_UPDATE,
             value: inputValue,
@@ -105,67 +106,70 @@ const EditProductScreen = props => {
     });
 
     return(
-        <ScrollView>
-            <View style={styles.form}>
+        <KeyboardAvoidingView style={{flex: 1}} behavior={Platform.isAndroid ? 'height' : 'padding'} keyboardVerticalOffset={100}>
+            <ScrollView>
+                <View style={styles.form}>
+                    <Input
+                        id="title"
+                        label="Title"
+                        errorText="Enter a valid title."
+                        keyboardType="default"
+                        autoCapitalize="sentences"
+                        autoCorrect
+                        returnType="next"
+                        onInputChange={onInputChange}
+                        initialValue={editedProduct ? editedProduct.title : ''}
+                        initiallyValid={!!editedProduct}
+                        required
+                    />
                 <Input
-                    id="title"
-                    label="Title"
-                    errorText="Enter a valid title."
-                    keyboardType="default"
-                    autoCapitalize="sentences"
-                    autoCorrect
-                    returnType="next"
-                    onInputChange={onInputChange}
-                    initialValue={editedProduct ? editedProduct.title : ''}
-                    initiallyValid={!!editedProduct}
-                    required
-                />
-               <Input
-                    id="imageUrl"
-                    label="Image URL"
-                    errorText="Enter a valid image URL."
-                    keyboardType="default"
-                    autoCapitalize="sentences"
-                    autoCorrect
-                    returnType="next"
-                    onInputChange={onInputChange}
-                    initialValue={editedProduct ? editedProduct.imageUrl : ''}
-                    initiallyValid={!!editedProduct}
-                    required
-                />
-                {
-                    editedProduct ? null : (
-                        <Input
-                            id="price"
-                            label="Price"
-                            errorText="Enter a valid price."
-                            keyboardType="decimal-pad"
-                            returnType="next"
-                            onInputChange={onInputChange}
-                            required
-                            min={0.1}
-                        />                        
-                    )
-                }
+                        id="imageUrl"
+                        label="Image URL"
+                        errorText="Enter a valid image URL."
+                        keyboardType="default"
+                        autoCapitalize="sentences"
+                        autoCorrect
+                        returnType="next"
+                        onInputChange={onInputChange}
+                        initialValue={editedProduct ? editedProduct.imageUrl : ''}
+                        initiallyValid={!!editedProduct}
+                        required
+                    />
+                    {
+                        editedProduct ? null : (
+                            <Input
+                                id="price"
+                                label="Price"
+                                errorText="Enter a valid price."
+                                keyboardType="decimal-pad"
+                                returnType="next"
+                                onInputChange={onInputChange}
+                                required
+                                min={0.1}
+                            />
+                        )
+                    }
 
-                <Input
-                    id="description"
-                    label="Description"
-                    errorText="Enter a valid description."
-                    keyboardType="default"
-                    autoCapitalize="sentences"
-                    autoCorrect
-                    multiline
-                    numberOfLines={3}
-                    onInputChange={onInputChange}
-                    initialValue={editedProduct ? editedProduct.description : ''}
-                    initiallyValid={!!editedProduct}
-                    required
-                    minLength={5}
-                />
-            </View>
+                    <Input
+                        id="description"
+                        label="Description"
+                        errorText="Enter a valid description."
+                        keyboardType="default"
+                        autoCapitalize="sentences"
+                        autoCorrect
+                        multiline
+                        numberOfLines={3}
+                        onInputChange={onInputChange}
+                        initialValue={editedProduct ? editedProduct.description : ''}
+                        initiallyValid={!!editedProduct}
+                        required
+                        minLength={5}
+                    />
+                </View>
 
-        </ScrollView>
+            </ScrollView>
+        </KeyboardAvoidingView>
+
     );
 };
 
