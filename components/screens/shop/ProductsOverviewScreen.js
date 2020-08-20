@@ -1,5 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { View, FlatList, Button, ActivityIndicator, StyleSheet, Text } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import {
+    View,
+    FlatList,
+    Button,
+    ActivityIndicator,
+    StyleSheet,
+    Text
+ } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import ProductItem from '../../shop/ProductItem';
@@ -12,19 +19,26 @@ import Colors from '../../../constans/Colors';
 
 const ProductsOverviewScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState();
     const products = useSelector(state => state.products.availableProducts);
     const dispatch = useDispatch();
 
+    const loadProducts = useCallback(async () => {
+        setError(null);
+        setIsLoading(true);
+        try {
+            await dispatch(productsActions.fetchProducts());
+        } catch (err) {
+            setError(err.message);
+        }
+        setIsLoading(false);
+
+    }, [dispatch, setIsLoading, setError]);
+
     // nie robić async przy useEffect, tzn. useEffect(async () => {...}) !!
     useEffect(() => {
-        const loadProducts = async () => {
-            setIsLoading(true);
-            await dispatch(productsActions.fetchProducts());
-            setIsLoading(false);
-        };
-
         loadProducts();
-    }, [dispatch]);
+    }, [dispatch, loadProducts]);
 
     const onViewDetails = (id, title) => { 
         props.navigation.navigate({
@@ -35,6 +49,15 @@ const ProductsOverviewScreen = props => {
             }
         })
      }
+
+    if(error) {
+        return (
+            <View style={styles.centered}>
+                <Text>An error occured.</Text>
+                <Button title="Try again" onPress={loadProducts} color={Colors.primary} />
+            </View>
+        );        
+    }
 
     if(isLoading) {
         return (
