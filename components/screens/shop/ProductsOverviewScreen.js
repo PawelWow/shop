@@ -40,6 +40,15 @@ const ProductsOverviewScreen = props => {
         loadProducts();
     }, [dispatch, loadProducts]);
 
+    // ładujemy zawsze, gdy wejdziemy na ten ekran, bo mogło się coś zmienić na serwerze
+    useEffect(() => {
+        const willfocusSub= props.navigation.addListener('willFocus', loadProducts);
+
+        return () => {
+            willfocusSub.remove();
+        };
+    }, [loadProducts]);
+
     const onViewDetails = (id, title) => { 
         props.navigation.navigate({
             routeName: 'ProductDetail',
