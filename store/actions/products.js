@@ -40,7 +40,7 @@ export const fetchProducts = () => {
 export const deleteProduct = productId => {
     return async dispatch => {
 
-        await fetch(`https://shop-rn-guide.firebaseio.com/products/${id}.json`, { 
+        await fetch(`https://shop-rn-guide.firebaseio.com/products/${productId}.json`, { 
             method: 'DELETE',            
          });
 
