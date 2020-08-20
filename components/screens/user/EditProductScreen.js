@@ -125,7 +125,7 @@ const EditProductScreen = props => {
             isValid: inputValidity,
             input: inputIdentifier
         });
-    });
+    }, [dispatchFormState]);
 
     if(isLoading) {
         return (
