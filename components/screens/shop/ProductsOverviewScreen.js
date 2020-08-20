@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { FlatList, Button } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, FlatList, Button, ActivityIndicator, StyleSheet, Text } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import ProductItem from '../../shop/ProductItem';
@@ -11,11 +11,19 @@ import * as productsActions from '../../../store/actions/products';
 import Colors from '../../../constans/Colors';
 
 const ProductsOverviewScreen = props => {
+    const [isLoading, setIsLoading] = useState(false);
     const products = useSelector(state => state.products.availableProducts);
     const dispatch = useDispatch();
 
+    // nie robić async przy useEffect, tzn. useEffect(async () => {...}) !!
     useEffect(() => {
-        dispatch(productsActions.fetchProducts());
+        const loadProducts = async () => {
+            setIsLoading(true);
+            await dispatch(productsActions.fetchProducts());
+            setIsLoading(false);
+        };
+
+        loadProducts();
     }, [dispatch]);
 
     const onViewDetails = (id, title) => { 
@@ -27,6 +35,22 @@ const ProductsOverviewScreen = props => {
             }
         })
      }
+
+    if(isLoading) {
+        return (
+            <View style={styles.centered}>
+                <ActivityIndicator size="large" color={Colors.primary} />
+            </View>
+        ); 
+    }
+
+    if(!isLoading && products.length === 0) {
+        return (
+            <View style={styles.centered}>
+                <Text>No products found. Add some.</Text>
+            </View>
+        );
+    }
 
     return (
         <FlatList
@@ -60,5 +84,13 @@ ProductsOverviewScreen.navigationOptions = navData => {
         headerLeft: () => <MenuHeaderButton onPress={() => { navData.navigation.toggleDrawer() }} />
     }
 };
+
+const styles = StyleSheet.create({
+    centered: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+});
 
 export default ProductsOverviewScreen;
