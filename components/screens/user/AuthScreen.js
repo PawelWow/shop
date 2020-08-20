@@ -1,5 +1,13 @@
-import React, { useState, useReducer, useCallback } from 'react';
-import { ScrollView, View, StyleSheet, KeyboardAvoidingView, Button } from 'react-native';
+import React, { useState, useReducer, useCallback, useEffect } from 'react';
+import {
+    ScrollView,
+    View,
+    StyleSheet,
+    KeyboardAvoidingView,
+    Button,
+    ActivityIndicator,
+    Alert
+ } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -39,6 +47,8 @@ const formReducer = (state, action) => {
 };
 
 const AuthScreen = props => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState();
     const [isSignUp, setIsSignUp] = useState(false);
     const dispatch = useDispatch();
 
@@ -53,8 +63,16 @@ const AuthScreen = props => {
         },
         formsIsValid:  false
     });    
+
+    useEffect(() => {
+        if(error) {
+            Alert.alert('Error occured!', error, [
+                { text: 'OK' }
+            ]);
+        }
+    }, [error])
     
-    const onAuth = () => {
+    const onAuth = async () => {
         let action;
         if(isSignUp) {
             action = authActions.signup(formState.inputValues.email, formState.inputValues.password);
@@ -62,7 +80,14 @@ const AuthScreen = props => {
             action = authActions.login(formState.inputValues.email, formState.inputValues.password);
         }
 
-        dispatch(action);
+        setError(null);
+        setIsLoading(true);
+        try  {
+            await dispatch(action); 
+        }catch(err) {
+            setError(err.message);
+        }
+        setIsLoading(false);
     };
 
     const onInputChange = useCallback((inputIdentifier, inputValue, inputValidity) => {
@@ -107,7 +132,10 @@ const AuthScreen = props => {
                             initialValue=""
                         />   
                         <View style={styles.buttonContainer} >
-                            <Button title={isSignUp ? 'Sign Up' : 'Login'} color={Colors.primary} onPress={onAuth} />
+                            { isLoading ? <ActivityIndicator size='small' color={Colors.primary} /> : 
+                                <Button title={isSignUp ? 'Sign Up' : 'Login'} color={Colors.primary} onPress={onAuth} />
+                            }
+
                             <Button
                                 title={`Switch to ${isSignUp ? 'login' : 'Switch to sign up'}`}
                                 color={Colors.accent}
