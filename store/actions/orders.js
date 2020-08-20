@@ -47,7 +47,7 @@ export const addOrder = (cartItems, totalAmount) => {
         const date = new Date();
 
         // any async code here
-        const response = await fetch(`https://shop-rn-guide.firebaseio.com/orders/${userId}.json`, { 
+        const response = await fetch(`https://shop-rn-guide.firebaseio.com/orders/${userId}.json?auth=${token}`, { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
