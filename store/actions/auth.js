@@ -77,7 +77,6 @@ export const login = (email, password) => {
 
         if(!response.ok) {
             const errorResData = await response.json();
-            console.log(errorResData);
 
             const errorId = errorResData.error.message;
             let message = 'Something went wrong!';
@@ -91,7 +90,7 @@ export const login = (email, password) => {
         }
 
         const resData = await response.json();
-
+        
         dispatch(authenticate(resData.localId, resData.idToken, parseInt(resData.expiresIn) * 1000));
         const expirationDate = new Date(new Date().getTime() + parseInt(resData.expiresIn) * 1000);
         saveDataToStorage(resData.idToken, resData.localId, expirationDate);
@@ -119,7 +118,6 @@ const setLogoutTimer = expirationTime => {
 };
 
 const saveDataToStorage = (token, userId, expirationDate) => {
-    console.log(`Saved. Token: ${token}, id: ${id}`);
     AsyncStorage.setItem(
         'userData',
         JSON.stringify({
