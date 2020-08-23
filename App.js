@@ -13,7 +13,7 @@ import cartReducer from './store/reducers/cart';
 import ordersReducer from './store/reducers/orders';
 import authReducer from './store/reducers/auth';
 
-import NavigationContainer from './navigation/NavigationContainer';
+import AppMavigator from './navigation/AppNavigatior';
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -33,7 +33,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <NavigationContainer />
+      <AppMavigator />
     </Provider>
   );
 }

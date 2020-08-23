@@ -2,7 +2,7 @@ import React from 'react';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import HeaderButton from './HeaderButton';
-import Platform from '../../constans/Platform';
+import IconsNames from '../../constans/IconsNames';
 
 
 const SaveHeaderButton = props => {
@@ -10,7 +10,7 @@ const SaveHeaderButton = props => {
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
             title='Save'
-            iconName={Platform.isAndroid ? 'md-checkmark' : 'ios-checkmark'}
+            iconName={IconsNames.checkmark}
             onPress={props.onPress}
         />
     </HeaderButtons>

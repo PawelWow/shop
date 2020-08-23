@@ -2,7 +2,7 @@ import React from 'react';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import HeaderButton from './HeaderButton';
-import Platform from '../../constans/Platform';
+import IconsNames from '../../constans/IconsNames';
 
 
 const CartHeaderButton = props => {
@@ -10,7 +10,7 @@ const CartHeaderButton = props => {
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
             title='Cart'
-            iconName={Platform.isAndroid ? 'md-cart' : 'ios-cart'}
+            iconName={IconsNames.cart}
             onPress={props.onPress}
         />
     </HeaderButtons>

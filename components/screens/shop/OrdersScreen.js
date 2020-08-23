@@ -51,7 +51,7 @@ const OrdersScreen = props => {
     );
 };
 
-OrdersScreen.navigationOptions =  navData => {
+export const screenOptions = navData => {
     return {
         headerTitle: 'Your orders',
         headerLeft: () => <MenuHeaderButton onPress={() => { navData.navigation.toggleDrawer() }} />

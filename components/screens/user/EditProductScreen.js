@@ -47,7 +47,7 @@ const EditProductScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
 
-    const prodId = props.navigation.getParam('productId');
+    const prodId = props.route.params ? props.route.params.productId : null;
     const editedProduct = useSelector(state => state.products.userProducts.find(prod => prod.id === prodId));
 
     const dispatch = useDispatch();
@@ -115,7 +115,9 @@ const EditProductScreen = props => {
     }, [dispatch, prodId, formState]);
 
     useEffect(() => {
-        props.navigation.setParams({ submit: onSubmit });
+        props.navigation.setOptions({
+            headerRight: () => <SaveHeaderButton onPress={onSubmit} />
+        });
     }, [onSubmit]);
 
     const onInputChange = useCallback((inputIdentifier, inputValue, inputValidity) => {
@@ -203,12 +205,11 @@ const EditProductScreen = props => {
     );
 };
 
-EditProductScreen.navigationOptions = navData => {
-    const submitFunction = navData.navigation.getParam('submit');
+export const screenOptions = navData => {
+    const routeParams = navData.route.params ? navData.route.params : {};
 
     return {
-        headerTitle: navData.navigation.getParam('productId') ? 'Edit product' : 'Add product',
-        headerRight: () => <SaveHeaderButton onPress={submitFunction} />,
+        headerTitle: routeParams.productId ? 'Edit product' : 'Add product',
     };
 };
 

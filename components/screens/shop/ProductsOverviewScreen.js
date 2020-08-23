@@ -44,22 +44,19 @@ const ProductsOverviewScreen = props => {
 
     // ładujemy zawsze, gdy wejdziemy na ten ekran, bo mogło się coś zmienić na serwerze
     useEffect(() => {
-        const willfocusSub= props.navigation.addListener('willFocus', loadProducts);
+        const unsubscribe = props.navigation.addListener('focus', loadProducts);
 
         return () => {
-            willfocusSub.remove();
+            unsubscribe();
         };
     }, [loadProducts]);
 
     const onViewDetails = (id, title) => { 
-        props.navigation.navigate({
-            routeName: 'ProductDetail',
-            params: {
-                productId: id,
-                productTitle: title
-            }
-        })
-     }
+        props.navigation.navigate('ProductDetail', {
+            productId: id,
+            productTitle: title
+        });
+     };
 
     if(error) {
         return (
@@ -113,7 +110,7 @@ const ProductsOverviewScreen = props => {
     );
 };
 
-ProductsOverviewScreen.navigationOptions = navData => {
+export const screenOptions = navData => {
     return {
         headerTitle: 'All products',
         headerRight: () => <CartHeaderButton onPress={() => { navData.navigation.navigate('Cart') }} />,

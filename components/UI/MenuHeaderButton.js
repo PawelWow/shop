@@ -2,15 +2,14 @@ import React from 'react';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import HeaderButton from './HeaderButton';
-import Platform from '../../constans/Platform';
-
+import IconsNames from '../../constans/IconsNames';
 
 const MenuHeaderButton = props => {
     return(
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
             title='Menu'
-            iconName={Platform.isAndroid ? 'md-menu' : 'ios-menu'}
+            iconName={IconsNames.menu}
             onPress={props.onPress}
         />
     </HeaderButtons>

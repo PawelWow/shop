@@ -83,8 +83,8 @@ const CartScreen = props => {
     );
 };
 
-CartScreen.navigationOptions = {
-    headerTitle: 'Your cart'
+export const screenOptions = () => {
+    return { headerTitle: 'Your cart' };
 };
 
 const styles = StyleSheet.create({
