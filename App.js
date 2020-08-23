@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
+import * as Notifications from 'expo-notifications';
 
 import { AppLoading } from 'expo';
 
@@ -14,6 +15,12 @@ import ordersReducer from './store/reducers/orders';
 import authReducer from './store/reducers/auth';
 
 import AppMavigator from './navigation/AppNavigatior';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return { shouldShowAlert: true };
+  },
+});
 
 const rootReducer = combineReducers({
   products: productsReducer,
