@@ -148,7 +148,7 @@ const EditProductScreen = props => {
                         keyboardType="default"
                         autoCapitalize="sentences"
                         autoCorrect
-                        returnType="next"
+                        returnKeyType="next"
                         onInputChange={onInputChange}
                         initialValue={editedProduct ? editedProduct.title : ''}
                         initiallyValid={!!editedProduct}
@@ -161,7 +161,7 @@ const EditProductScreen = props => {
                         keyboardType="default"
                         autoCapitalize="sentences"
                         autoCorrect
-                        returnType="next"
+                        returnKeyType="next"
                         onInputChange={onInputChange}
                         initialValue={editedProduct ? editedProduct.imageUrl : ''}
                         initiallyValid={!!editedProduct}
@@ -174,7 +174,7 @@ const EditProductScreen = props => {
                                 label="Price"
                                 errorText="Enter a valid price."
                                 keyboardType="decimal-pad"
-                                returnType="next"
+                                returnKeyType="next"
                                 onInputChange={onInputChange}
                                 required
                                 min={0.1}
